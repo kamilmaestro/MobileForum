@@ -31,14 +31,12 @@ class RegistrationActivity : AppCompatActivity() {
     passwordTxt = findViewById(R.id.passwordTxt)
     emailTxt = findViewById(R.id.emailTxt)
     registerBtn = findViewById(R.id.registerBtn)
-    registerUser()
+    registerBtn.setOnClickListener{ registerUser() }
   }
 
   private fun registerUser() {
-    registerBtn.setOnClickListener{
       createNewAccount()
       goTo(LoginActivity::class.java)
-    }
   }
 
   private fun createNewAccount() {
