@@ -9,10 +9,18 @@
     <TextView
             android:text="Talkerr"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/appNameTxt" android:textSize="36sp"
+            android:layout_height="wrap_content" android:id="@+id/appNameTxt" android:textSize="40sp"
             android:textStyle="bold" android:layout_marginTop="64dp" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent" android:textColor="@color/colorAccent"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/conversation" android:id="@+id/imageView"
+            android:layout_marginTop="24dp" app:layout_constraintTop_toBottomOf="@+id/appNameTxt"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.498"
+    />
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -20,8 +28,9 @@
             android:ems="10"
             android:id="@+id/loginTxt" android:layout_marginEnd="32dp" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/appNameTxt"
-            android:textSize="24sp" android:textColor="@color/colorSecond"/>
+            android:textSize="24sp" android:textColor="@color/colorSecond"
+            app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="48dp"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"/>
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,25 +39,27 @@
             android:id="@+id/passwordTxt"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="32dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="32dp"
-            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/loginTxt"
-            android:textSize="24sp" android:textColor="@color/colorSecond"/>
+            android:textSize="24sp" android:textColor="@color/colorSecond" app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/loginTxt"/>
     <Button
             android:text="Submit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/loginBtn" android:layout_marginTop="32dp"
-            app:layout_constraintTop_toBottomOf="@+id/passwordTxt" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content" android:id="@+id/loginBtn"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" android:textColor="@color/colorThird"
             android:background="@color/colorPrimary" android:textColorHighlight="@color/colorThird"
             android:textColorHint="@color/colorThird" android:textColorLink="@color/colorThird"
             android:textSize="24sp" android:paddingBottom="8dp" android:paddingTop="8dp" android:paddingLeft="16dp"
-            android:paddingRight="16dp"/>
+            android:paddingRight="16dp" app:layout_constraintHorizontal_bias="0.505"
+            android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/passwordTxt"/>
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/registerBtn" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/loginBtn" app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/registerBtn"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             android:text="Make a new account" android:textColor="@color/colorPrimary" android:textSize="18sp"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent" app:layout_constraintHorizontal_bias="0.497"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/loginBtn"/>
 </android.support.constraint.ConstraintLayout>
