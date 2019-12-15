@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.kamilmarnik.mobileforum.api.ApiService
 import com.kamilmarnik.mobileforum.model.Topic
+import com.kamilmarnik.mobileforum.service.retrofitBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,13 +21,7 @@ class TopicListActivity : AppCompatActivity() {
   }
 
   private fun getTopics(authHeader: String) {
-    val retrofit = Retrofit.Builder()
-      .baseUrl("http://10.0.2.2:8080/")
-      .addConverterFactory(GsonConverterFactory.create())
-      .build()
-
-    val apiService = retrofit.create(ApiService::class.java)
-    val call = apiService.getTopics(authHeader)
+    val call = retrofitBuilder(ApiService::class.java, "http://10.0.2.2:8080/").getTopics(authHeader)
 
     call.enqueue(object: Callback<List<Topic>> {
       override fun onFailure(call: Call<List<Topic>>, t: Throwable) {

@@ -11,6 +11,7 @@ import com.kamilmarnik.mobileforum.api.ApiService
 import com.kamilmarnik.mobileforum.api.requests.LoginRequest
 import com.kamilmarnik.mobileforum.model.Topic
 import com.kamilmarnik.mobileforum.service.goTo
+import com.kamilmarnik.mobileforum.service.retrofitBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,15 +40,9 @@ class LoginActivity : AppCompatActivity() {
 
   private fun login() {
     val login = LoginRequest(loginTxt.text.toString(), passwordTxt.text.toString())
-    val retrofit = Retrofit.Builder()
-      .baseUrl("http://10.0.2.2:8080")
-      .addConverterFactory(GsonConverterFactory.create())
-      .build()
-
-    val apiService = retrofit.create(ApiService::class.java)
     val base: String = login.username + ":" + login.password
     val authHeader: String = "Basic " + Base64.encodeToString(base.toByteArray(), Base64.NO_WRAP)
-    val call = apiService.loginUser(authHeader)
+    val call = retrofitBuilder(ApiService::class.java, "http://10.0.2.2:8080/").loginUser(authHeader)
 
     call.enqueue(object: Callback<Void> {
       override fun onFailure(call: Call<Void>, t: Throwable) {
