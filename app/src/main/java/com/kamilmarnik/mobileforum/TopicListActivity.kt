@@ -2,6 +2,7 @@ package com.kamilmarnik.mobileforum
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import com.kamilmarnik.mobileforum.api.ApiService
 import com.kamilmarnik.mobileforum.model.Topic
@@ -9,15 +10,16 @@ import com.kamilmarnik.mobileforum.service.retrofitBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class TopicListActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_topic_list)
-    getTopics(intent.getStringExtra("authHeader"))
+    val topicList = getTopics(intent.getStringExtra("authHeader")) as ArrayList<Topic>
+    val topicView = findViewById<RecyclerView>(R.id.topicView)
+    val topicAdapter = TopicViewAdapter(topicList)
+    topicView.adapter = topicAdapter
   }
 
   private fun getTopics(authHeader: String) {

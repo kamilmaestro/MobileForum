@@ -1,16 +1,15 @@
-package com.kamilmarnik.mobileforum.service
+package com.kamilmarnik.mobileforum
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.kamilmarnik.mobileforum.R
-import org.w3c.dom.Text
+import com.kamilmarnik.mobileforum.model.Topic
 
-class ViewAdapter(val topicList: ArrayList<String>): RecyclerView.Adapter<ViewAdapter.ViewHolder>() {
+class TopicViewAdapter(val topicList: ArrayList<Topic>): RecyclerView.Adapter<TopicViewAdapter.ViewHolder>() {
   class ViewHolder(itemView: View ) : RecyclerView.ViewHolder(itemView) {
-      val textView = itemView.findViewById(R.id.topicView) as TextView
+      val textView = itemView.findViewById<TextView>(R.id.topicView)
   }
 
   override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
@@ -23,7 +22,7 @@ class ViewAdapter(val topicList: ArrayList<String>): RecyclerView.Adapter<ViewAd
   }
 
   override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-     val topic = topicList[p1]
-     p0?.textView?.text = topic;
+     val topicName = topicList[p1].name
+     p0?.textView?.text = topicName
   }
 }

@@ -8,6 +8,7 @@
         tools:context=".TopicListActivity">
 
     <android.support.v7.widget.RecyclerView
+            android:id="@+id/topicView"
             android:layout_width="523dp"
             android:layout_height="757dp"
             app:layout_constraintBottom_toBottomOf="parent"
