@@ -35,24 +35,24 @@ class TopicListActivity : AppCompatActivity() {
   }
 
   private fun loadTopics(authHeader: String, topicView: RecyclerView) {
-    val call = retrofitBuilder(ApiService::class.java, "http://10.0.2.2:8080/").getTopics(authHeader)
+    val call = retrofitBuilder(ApiService::class.java, getString(R.string.URL)).getTopics(authHeader)
 
     call.enqueue(object: Callback<List<Topic>> {
       override fun onFailure(call: Call<List<Topic>>, t: Throwable) {
-        Toast.makeText(applicationContext, "failure: ".plus(t.message), Toast.LENGTH_LONG).show()
+        Toast.makeText(applicationContext, "Error: ".plus(t.message), Toast.LENGTH_LONG).show()
       }
       override fun onResponse(call: Call<List<Topic>>, response: Response<List<Topic>>) {
         if(!response.isSuccessful) {
-          Toast.makeText(applicationContext, "response: ".plus(response.code()), Toast.LENGTH_LONG).show()
+          Toast.makeText(applicationContext, "Error: ".plus(response.code()), Toast.LENGTH_LONG).show()
           return
         }
-        showTopics(response, topicView)
+        response.body()?.let { showTopics(it, topicView) }
       }
     })
   }
 
-  private fun showTopics(response: Response<List<Topic>>, topicView: RecyclerView) {
-    response.body()?.forEach { topic ->
+  private fun showTopics(obtainedTopics: List<Topic>, topicView: RecyclerView) {
+    obtainedTopics.forEach { topic ->
       topics.add(Topic(topic.topicId, topic.name, topic.description, topic.createdOn, topic.authorId))
     }
 

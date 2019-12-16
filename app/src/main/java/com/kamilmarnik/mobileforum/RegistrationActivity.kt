@@ -4,17 +4,12 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
 import com.kamilmarnik.mobileforum.api.ApiService
 import com.kamilmarnik.mobileforum.api.requests.RegistrationRequest
-import com.kamilmarnik.mobileforum.model.User
 import com.kamilmarnik.mobileforum.service.goTo
+import com.kamilmarnik.mobileforum.service.makeEnqueue
+import com.kamilmarnik.mobileforum.service.retrofitBuilder
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class RegistrationActivity : AppCompatActivity() {
 
@@ -43,23 +38,7 @@ class RegistrationActivity : AppCompatActivity() {
     val register = RegistrationRequest(
       loginTxt.text.toString(), passwordTxt.text.toString(), emailTxt.text.toString())
 
-    val retrofit = Retrofit.Builder()
-      .baseUrl("http://10.0.2.2:8080/")
-      .addConverterFactory(GsonConverterFactory.create())
-      .build()
-
-    val apiService = retrofit.create(ApiService::class.java)
-    val call = apiService.registerUser(register)
-    call.enqueue(object: Callback<User> {
-      override fun onFailure(call: Call<User>, t: Throwable) {
-        Toast.makeText(applicationContext, "Error: ".plus(t.message), Toast.LENGTH_LONG).show()
-      }
-      override fun onResponse(call: Call<User>, response: Response<User>) {
-        if(!response.isSuccessful) {
-          Toast.makeText(applicationContext, "Error: ".plus(response.code()), Toast.LENGTH_LONG).show()
-          return
-        }
-      }
-    })
+    val call = retrofitBuilder(ApiService::class.java, getString(R.string.URL)).registerUser(register)
+    makeEnqueue(call as Call<Any>, applicationContext)
   }
 }

@@ -2,23 +2,17 @@ package com.kamilmarnik.mobileforum
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcelable
-import android.util.Base64
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.kamilmarnik.mobileforum.api.ApiService
 import com.kamilmarnik.mobileforum.api.requests.LoginRequest
-import com.kamilmarnik.mobileforum.model.Topic
 import com.kamilmarnik.mobileforum.service.getAuthHeader
 import com.kamilmarnik.mobileforum.service.goTo
 import com.kamilmarnik.mobileforum.service.retrofitBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -42,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
   private fun login() {
     val login = LoginRequest(loginTxt.text.toString(), passwordTxt.text.toString())
     val authHeader = getAuthHeader(login)
-    val call = retrofitBuilder(ApiService::class.java, "http://10.0.2.2:8080/").loginUser(authHeader)
+    val call = retrofitBuilder(ApiService::class.java, getString(R.string.URL)).loginUser(authHeader)
 
     call.enqueue(object: Callback<Void> {
       override fun onFailure(call: Call<Void>, t: Throwable) {
@@ -52,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
         if(!response.isSuccessful) {
           if(response.code() != 404) {
             if (response.code() == 401) {
-              Toast.makeText(applicationContext, "Wrong login or password!", Toast.LENGTH_LONG).show()
+              Toast.makeText(applicationContext, R.string.WRONG_CREDENTIALS, Toast.LENGTH_LONG).show()
             }
             return
           }
