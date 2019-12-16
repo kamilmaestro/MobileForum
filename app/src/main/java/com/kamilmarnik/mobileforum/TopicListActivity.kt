@@ -58,4 +58,12 @@ class TopicListActivity : AppCompatActivity() {
 
     topicView.adapter = TopicViewAdapter(topics, applicationContext)
   }
+
+  private fun goToPosts(){
+
+  }
+
+  private fun showDescription(){
+
+  }
 }
