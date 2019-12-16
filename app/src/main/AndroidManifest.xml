@@ -3,7 +3,8 @@
           package="com.kamilmarnik.mobileforum">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -12,6 +13,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
+        <activity android:name=".TopicListActivity">
+        </activity>
         <activity android:name=".RegistrationActivity">
         </activity>
         <activity android:name=".LoginActivity">
