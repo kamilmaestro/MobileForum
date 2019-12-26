@@ -20,12 +20,6 @@ fun <T> retrofitBuilder(service: Class<T>, url: String?) : T {
   return retrofit.create(service)
 }
 
-fun getAuthHeader(loginRequest: LoginRequest): String {
-  val base: String = loginRequest.username + ":" + loginRequest.password
-
-  return "Basic " + Base64.encodeToString(base.toByteArray(), Base64.NO_WRAP)
-}
-
 fun makeEnqueue(call: Call<Any>, context: Context?) {
   call.enqueue(object : Callback<Any> {
     override fun onFailure(call: Call<Any>, t: Throwable) {

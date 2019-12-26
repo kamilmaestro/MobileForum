@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import com.kamilmarnik.mobileforum.api.ApiService
 import com.kamilmarnik.mobileforum.model.Topic
+import com.kamilmarnik.mobileforum.service.goTo
 import com.kamilmarnik.mobileforum.service.retrofitBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,7 +26,7 @@ class TopicListActivity : AppCompatActivity() {
     val topicView = findViewById<RecyclerView>(R.id.topicView)
     buildRecView(topicView)
 
-    loadTopics(intent.getStringExtra("authHeader"), topicView)
+    loadTopics(intent.getStringExtra(getString(R.string.AUTH_HEADER_KEY)), topicView)
   }
 
   private fun buildRecView(topicRecView: RecyclerView) {
@@ -43,6 +44,10 @@ class TopicListActivity : AppCompatActivity() {
       }
       override fun onResponse(call: Call<List<Topic>>, response: Response<List<Topic>>) {
         if(!response.isSuccessful) {
+          if (response.code() == 401) {
+            Toast.makeText(applicationContext, R.string.RE_AUTHENTICATION, Toast.LENGTH_LONG).show()
+            goTo(LoginActivity::class.java)
+          }
           Toast.makeText(applicationContext, "Error: ".plus(response.code()), Toast.LENGTH_LONG).show()
           return
         }

@@ -2,5 +2,7 @@
     <string name="app_name">MobileForum</string>
     <string name="URL">http://10.0.2.2:8080/</string>
     <string name="WRONG_CREDENTIALS">Wrong credentials! Try again</string>
-    <string name="BASIC_AUTH">Basic </string>
+    <string name="RE_AUTHENTICATION">You need to authenticate</string>
+    <string name="AUTHORIZATION_HEADER">Authorization</string>
+    <string name="AUTH_HEADER_KEY">authHeader</string>
 </resources>

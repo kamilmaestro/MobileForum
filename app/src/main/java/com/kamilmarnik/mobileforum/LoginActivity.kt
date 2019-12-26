@@ -7,7 +7,6 @@ import android.widget.EditText
 import android.widget.Toast
 import com.kamilmarnik.mobileforum.api.ApiService
 import com.kamilmarnik.mobileforum.api.requests.LoginRequest
-import com.kamilmarnik.mobileforum.service.getAuthHeader
 import com.kamilmarnik.mobileforum.service.goTo
 import com.kamilmarnik.mobileforum.service.retrofitBuilder
 import retrofit2.Call
@@ -34,9 +33,8 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun login() {
-    val login = LoginRequest(loginTxt.text.toString(), passwordTxt.text.toString())
-    val authHeader = getAuthHeader(login)
-    val call = retrofitBuilder(ApiService::class.java, getString(R.string.URL)).loginUser(authHeader)
+    val call = retrofitBuilder(ApiService::class.java, getString(R.string.URL)).loginUser(
+      LoginRequest(loginTxt.text.toString(), passwordTxt.text.toString()))
 
     call.enqueue(object: Callback<Void> {
       override fun onFailure(call: Call<Void>, t: Throwable) {
@@ -44,14 +42,14 @@ class LoginActivity : AppCompatActivity() {
       }
       override fun onResponse(call: Call<Void>, response: Response<Void>) {
         if(!response.isSuccessful) {
-          if(response.code() != 404) {
             if (response.code() == 401) {
               Toast.makeText(applicationContext, R.string.WRONG_CREDENTIALS, Toast.LENGTH_LONG).show()
             }
             return
-          }
         }
-        goTo(TopicListActivity::class.java) { putString("authHeader", authHeader) }
+        val header: String = response.headers().get(getString(R.string.AUTHORIZATION_HEADER)).toString()
+        println("Bearer: $header")
+        goTo(TopicListActivity::class.java) { putString(getString(R.string.AUTH_HEADER_KEY), header) }
       }
     })
   }
