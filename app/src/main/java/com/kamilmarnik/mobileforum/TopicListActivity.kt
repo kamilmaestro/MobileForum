@@ -9,6 +9,7 @@ import com.kamilmarnik.mobileforum.api.ApiService
 import com.kamilmarnik.mobileforum.model.Topic
 import com.kamilmarnik.mobileforum.service.goTo
 import com.kamilmarnik.mobileforum.service.retrofitBuilder
+import kotlinx.android.synthetic.main.list_item.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -64,11 +65,4 @@ class TopicListActivity : AppCompatActivity() {
     topicView.adapter = TopicViewAdapter(topics, applicationContext)
   }
 
-  private fun goToPosts(){
-
-  }
-
-  private fun showDescription(){
-
-  }
 }

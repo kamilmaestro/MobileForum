@@ -10,7 +10,7 @@
             android:textColor="#000"
             android:textSize="30sp"
             android:layout_toStartOf="@id/descriptionIcon"
-            android:onClick="goToPosts"/>
+           />
 
     <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/descriptionIcon"
@@ -19,6 +19,6 @@
             android:layout_alignParentEnd="true"
             android:foregroundGravity="right"
             android:src="@mipmap/ic_launcher_round"
-            android:onClick="showDescription"/>
+           />
 
 </RelativeLayout>
