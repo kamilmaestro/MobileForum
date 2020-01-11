@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.TextView
 import com.kamilmarnik.mobileforum.model.Topic
+import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.list_item.view.*
 
 class TopicViewAdapter(private val topicList: MutableList<Topic>, private val context: Context): RecyclerView.Adapter<TopicViewAdapter.TopicViewHolder>() {
 
@@ -22,28 +24,22 @@ class TopicViewAdapter(private val topicList: MutableList<Topic>, private val co
 
   override fun onBindViewHolder(viewHolder: TopicViewHolder, position: Int) {
     val topicName = topicList[position].name
-    viewHolder.textView?.text = topicName
-    viewHolder.itemView.setOnClickListener{
-      showDescription(topicList[position].description)
-    }
+    viewHolder.textView?.text = "\t\t\t $topicName"
+    val description: String = topicList[position].description
     viewHolder.textView?.setOnClickListener{
-      goToPosts(topicList[position].topicId)
+      println("text click")
+    }
+    viewHolder.imageView?.setOnClickListener{
+      println("icon click")
     }
   }
 
   class TopicViewHolder(view: View ) : RecyclerView.ViewHolder(view) {
     val textView: TextView? = view.findViewById(R.id.topicView)
+    val imageView: CircleImageView? = view.findViewById(R.id.descriptionIcon)
   }
 
-  private fun showDescription(description: String){
-    val builder = AlertDialog.Builder(context)
-    builder.setTitle("Description")
-      .setMessage(description)
-      .setPositiveButton("Back"){ dialog: DialogInterface?, which: Int ->  }
-    builder.show()
-  }
 
-  private fun goToPosts(id: Long){
 
-  }
+
 }
