@@ -62,11 +62,7 @@ class TopicListActivity : AppCompatActivity() {
       topics.add(Topic(topic.topicId, topic.name, topic.description, topic.createdOn, topic.authorId))
     }
 
-    topicView.adapter = TopicViewAdapter(topics, applicationContext)
-  }
-
-  fun goToPosts(){
-    goTo(PostActivity::class.java)
+    topicView.adapter = TopicViewAdapter(topics, this)
   }
 
 }

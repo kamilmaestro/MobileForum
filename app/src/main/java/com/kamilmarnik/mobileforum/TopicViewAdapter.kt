@@ -10,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.TextView
+import android.widget.Toast
 import com.kamilmarnik.mobileforum.model.Topic
+import com.kamilmarnik.mobileforum.service.goTo
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.list_item.view.*
 
@@ -27,10 +29,33 @@ class TopicViewAdapter(private val topicList: MutableList<Topic>, private val co
     viewHolder.textView?.text = "\t\t\t $topicName"
     val description: String = topicList[position].description
     viewHolder.textView?.setOnClickListener{
-      println("text click")
+      /*
+      val text = description
+      val duration = Toast.LENGTH_SHORT
+
+      val toast = Toast.makeText(context, text, duration)
+      toast.show()
+       */
+
+      context.goTo(PostActivity::class.java)
     }
+
+
     viewHolder.imageView?.setOnClickListener{
-      println("icon click")
+      /*
+      val text = "icon click"
+      val duration = Toast.LENGTH_SHORT
+
+      val toast = Toast.makeText(context, text, duration)
+      toast.show()
+       */
+      AlertDialog.Builder(context)
+        .setTitle("Description")
+        .setMessage(description)
+        .setNegativeButton("OK"){dialog: DialogInterface,_-> dialog.dismiss()}
+        .create()
+        .show()
+
     }
   }
 
