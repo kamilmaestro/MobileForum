@@ -1,5 +1,6 @@
 package com.kamilmarnik.mobileforum.api
 
+import com.kamilmarnik.mobileforum.api.requests.LoginRequest
 import com.kamilmarnik.mobileforum.api.requests.RegistrationRequest
 import com.kamilmarnik.mobileforum.model.Topic
 import com.kamilmarnik.mobileforum.model.User
@@ -11,11 +12,11 @@ import retrofit2.http.POST
 
 interface ApiService {
 
-  @POST("/user/")
+  @POST("/register")
   fun registerUser(@Body register: RegistrationRequest): Call<User>
 
-  @POST("/")
-  fun loginUser(@Header("Authorization") authHeader: String): Call<Void>
+  @POST("/login")
+  fun loginUser(@Body login: LoginRequest): Call<Void>
 
   @GET("/topic/")
   fun getTopics(@Header("Authorization") authHeader: String): Call<List<Topic>>
