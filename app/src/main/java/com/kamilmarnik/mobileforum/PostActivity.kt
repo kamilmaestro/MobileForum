@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import com.kamilmarnik.mobileforum.model.Post
+import com.kamilmarnik.mobileforum.service.goTo
 import java.time.LocalDateTime
 import java.util.*
 
@@ -65,6 +66,11 @@ class PostActivity : AppCompatActivity() {
         postView.adapter = PostViewAdapter(posts, this)
         currentPageIndex--
       }
+    }
+
+    var aButton = findViewById<Button>(R.id.addButton)
+    aButton.setOnClickListener {
+      goTo(AddPostActivity::class.java)
     }
 
 

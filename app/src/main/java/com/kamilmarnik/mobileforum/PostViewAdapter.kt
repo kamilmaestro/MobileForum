@@ -30,6 +30,9 @@ class PostViewAdapter(private val postList: MutableList<Post>, private val conte
     viewHolder.authorView?.text = authorName
     val postText: String = postList[position].content
     viewHolder.postView?.text = postText
+    viewHolder.itemView.setOnClickListener {
+      context.goTo(CommentActivity::class.java)
+    }
   }
 
   class PostViewHolder(view: View ) : RecyclerView.ViewHolder(view) {
