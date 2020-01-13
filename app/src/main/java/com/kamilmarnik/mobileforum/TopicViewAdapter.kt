@@ -16,7 +16,7 @@ import com.kamilmarnik.mobileforum.service.goTo
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class TopicViewAdapter(private val topicList: MutableList<Topic>, private val context: Context): RecyclerView.Adapter<TopicViewAdapter.TopicViewHolder>() {
+class TopicViewAdapter(private val topicList: MutableList<Topic>, private val context: Context, private val authHeader: String): RecyclerView.Adapter<TopicViewAdapter.TopicViewHolder>() {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewHolder: Int): TopicViewHolder =
     TopicViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item, parent, false))
@@ -28,18 +28,10 @@ class TopicViewAdapter(private val topicList: MutableList<Topic>, private val co
     val topicName = topicList[position].name
     viewHolder.textView?.text = "\t\t\t $topicName"
     val description: String = topicList[position].description
+    val topicId: Long = topicList[position].topicId
     viewHolder.textView?.setOnClickListener{
-      /*
-      val text = description
-      val duration = Toast.LENGTH_SHORT
-
-      val toast = Toast.makeText(context, text, duration)
-      toast.show()
-       */
-
-      context.goTo(PostActivity::class.java)
+      context.goTo(PostActivity::class.java) { putString("authHeader", authHeader); putLong("topicId", topicId)}
     }
-
 
     viewHolder.imageView?.setOnClickListener{
       /*
