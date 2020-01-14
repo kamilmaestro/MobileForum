@@ -27,6 +27,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:text="Add"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorThird"
                 android:textSize="20sp"
                 android:id="@+id/addButton2"
                 />

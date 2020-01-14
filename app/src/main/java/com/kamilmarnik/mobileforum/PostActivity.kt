@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
-import androidx.paging.PagedList
 import com.kamilmarnik.mobileforum.api.ApiService
 import com.kamilmarnik.mobileforum.api.requests.LoginRequest
 import com.kamilmarnik.mobileforum.model.Post
@@ -23,8 +22,6 @@ import kotlin.collections.ArrayList
 
 class PostActivity : AppCompatActivity() {
   val posts: MutableList<Post> = ArrayList()
-  var pagesCount: Int = 0
-  var currentPageIndex: Int = 0
 
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,37 +30,16 @@ class PostActivity : AppCompatActivity() {
     val postView = findViewById<RecyclerView>(R.id.postView)
     buildRecView(postView)
 
-    postView.adapter = PostViewAdapter(posts, this)
-    pagesCount = 3
-    currentPageIndex = 1
+    postView.adapter = PostViewAdapter(posts, this, intent.getStringExtra("authHeader"))
 
-    val fButton = findViewById<Button>(R.id.forwardButton)
-    fButton.setOnClickListener {
-//      if(currentPageIndex==1) {
-//        postView.adapter = PostViewAdapter(posts2, this)
-//        currentPageIndex++
-//      }
-//      else if (currentPageIndex == 2){
-//        postView.adapter = PostViewAdapter(posts3, this)
-//        currentPageIndex++
-//      }
-    }
 
-    val bButton = findViewById<Button>(R.id.backButton)
-    bButton.setOnClickListener {
-//      if(currentPageIndex==3) {
-//        postView.adapter = PostViewAdapter(posts2, this)
-//        currentPageIndex--
-//      }
-//      else if (currentPageIndex == 2){
-//        postView.adapter = PostViewAdapter(posts, this)
-//        currentPageIndex--
-//      }
-    }
 
     val aButton = findViewById<Button>(R.id.addButton)
     aButton.setOnClickListener {
-      goTo(AddPostActivity::class.java)
+      goTo(AddPostActivity::class.java){ putString("authHeader", intent.getStringExtra("authHeader")); putLong("topicId",intent.getLongExtra("topicId",-1))}
+      loadPosts(intent.getStringExtra("authHeader"),
+          intent.getLongExtra("topicId",0),
+          postView)
     }
 
     loadPosts(intent.getStringExtra(getString(R.string.AUTH_HEADER_KEY)),
@@ -74,36 +50,38 @@ class PostActivity : AppCompatActivity() {
   private fun buildRecView(postView:RecyclerView) {
     postView.setHasFixedSize(true)
     postView.layoutManager = LinearLayoutManager(applicationContext)
-    postView.adapter = PostViewAdapter(posts, applicationContext)
+    postView.adapter = PostViewAdapter(posts, applicationContext, intent.getStringExtra("authHeader"))
   }
 
   private fun loadPosts(authHeader: String, topicId: Long, postView: RecyclerView) {
     val call = retrofitBuilder(ApiService::class.java, getString(R.string.URL))
       .getPostsByTopicId(authHeader, topicId)
 
-    call.enqueue(object: Callback<PagedList<Post>> {
-      override fun onFailure(call: Call<PagedList<Post>>, t: Throwable) {
+    call.enqueue(object: Callback<List<Post>> {
+      override fun onFailure(call: Call<List<Post>>, t: Throwable) {
         Toast.makeText(applicationContext, "Error: ".plus(t.message), Toast.LENGTH_LONG).show()
+        println(t.message)
       }
-      override fun onResponse(call: Call<PagedList<Post>>, response: Response<PagedList<Post>>) {
+      override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
         if(!response.isSuccessful) {
           if (response.code() == 401) {
             Toast.makeText(applicationContext, R.string.RE_AUTHENTICATION, Toast.LENGTH_LONG).show()
             goTo(LoginActivity::class.java)
           }
           Toast.makeText(applicationContext, "Error: ".plus(response.code()), Toast.LENGTH_LONG).show()
+
           return
         }
-        response.body()?.let { showTopics(it.toList(), postView, authHeader) }
+        response.body()?.let { showPosts(it, postView, authHeader) }
       }
     })
   }
 
-  private fun showTopics(obtainedTopics: List<Post>, topicView: RecyclerView, authHeader: String) {
+  private fun showPosts(obtainedTopics: List<Post>, topicView: RecyclerView, authHeader: String) {
     obtainedTopics.forEach { post ->
       posts.add(Post(post.postId, post.content, post.createdOn, post.authorId, post.topicId, post.authorLogin))
     }
 
-    topicView.adapter = PostViewAdapter(posts, this)
+    topicView.adapter = PostViewAdapter(posts, this,authHeader)
   }
 }

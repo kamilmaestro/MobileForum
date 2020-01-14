@@ -21,7 +21,7 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:foregroundGravity="right"
-            android:src="@mipmap/ic_launcher_round"
+            android:src="@mipmap/ic_description"
             />
 
 

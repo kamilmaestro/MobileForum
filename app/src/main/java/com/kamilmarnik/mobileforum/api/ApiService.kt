@@ -1,6 +1,6 @@
 package com.kamilmarnik.mobileforum.api
 
-import androidx.paging.PagedList
+
 import com.kamilmarnik.mobileforum.api.requests.CreateComment
 import com.kamilmarnik.mobileforum.api.requests.CreatePost
 import com.kamilmarnik.mobileforum.api.requests.LoginRequest
@@ -25,7 +25,7 @@ interface ApiService {
 
   @GET("/post/topic/{topicId}")
   fun getPostsByTopicId(@Header("Authorization") authHeader: String,
-                        @Path("topicId") topicId: Long) : Call<PagedList<Post>>
+                        @Path("topicId") topicId: Long) : Call<List<Post>>
 
   @POST("/post/comment/")
   fun addCommentToPost(@Header("Authorization") authHeader: String,

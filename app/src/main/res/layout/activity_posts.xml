@@ -27,28 +27,11 @@
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:text="Back"
-                android:textSize="20sp"
-                android:id="@+id/backButton"
-
-                />
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="Forward"
-                android:textSize="20sp"
-                android:id="@+id/forwardButton"
-
-                />
-
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:text="Add"
                 android:textSize="20sp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorThird"
                 android:id="@+id/addButton"
                 />
     </RelativeLayout>
