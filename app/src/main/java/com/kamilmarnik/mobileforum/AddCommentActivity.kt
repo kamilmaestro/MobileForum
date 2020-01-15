@@ -24,7 +24,7 @@ class AddCommentActivity : AppCompatActivity() {
     var aButton = findViewById<Button>(R.id.addCommentButton)
     val textInput = findViewById<EditText>(R.id.addCommentTextView)
     aButton.setOnClickListener {
-      addComment(intent.getStringExtra("authHeader"),CreateComment(textInput.text.toString(),intent.getLongExtra("topicId", -1)))
+      addComment(intent.getStringExtra("authHeader"),CreateComment(textInput.text.toString(),intent.getLongExtra("postId", -1)))
       finish()
     }
   }
