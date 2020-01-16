@@ -23,16 +23,16 @@ class TopicListActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_topic_list)
 
+    val authHeader = intent.getStringExtra(getString(R.string.AUTH_HEADER_KEY))
     val topicView = findViewById<RecyclerView>(R.id.topicView)
-    buildRecView(topicView)
-
-    loadTopics(intent.getStringExtra(getString(R.string.AUTH_HEADER_KEY)), topicView)
+    buildRecView(topicView, authHeader)
+    loadTopics(authHeader, topicView)
   }
 
-  private fun buildRecView(topicRecView: RecyclerView) {
+  private fun buildRecView(topicRecView: RecyclerView, authHeader: String) {
     topicRecView.setHasFixedSize(true)
     topicRecView.layoutManager = LinearLayoutManager(applicationContext)
-    topicRecView.adapter = TopicViewAdapter(topics, applicationContext)
+    topicRecView.adapter = TopicViewAdapter(topics, applicationContext, authHeader)
   }
 
   private fun loadTopics(authHeader: String, topicView: RecyclerView) {
@@ -51,24 +51,17 @@ class TopicListActivity : AppCompatActivity() {
           Toast.makeText(applicationContext, "Error: ".plus(response.code()), Toast.LENGTH_LONG).show()
           return
         }
-        response.body()?.let { showTopics(it, topicView) }
+        response.body()?.let { showTopics(it, topicView, authHeader) }
       }
     })
   }
 
-  private fun showTopics(obtainedTopics: List<Topic>, topicView: RecyclerView) {
+  private fun showTopics(obtainedTopics: List<Topic>, topicView: RecyclerView, authHeader: String) {
     obtainedTopics.forEach { topic ->
       topics.add(Topic(topic.topicId, topic.name, topic.description, topic.createdOn, topic.authorId))
     }
 
-    topicView.adapter = TopicViewAdapter(topics, applicationContext)
+    topicView.adapter = TopicViewAdapter(topics, this, authHeader)
   }
 
-  private fun goToPosts(){
-
-  }
-
-  private fun showDescription(){
-
-  }
 }

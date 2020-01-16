@@ -13,9 +13,12 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <activity android:name=".PostsActivity"></activity>
-        <activity android:name=".TopicListActivity"></activity>
-        <activity android:name=".RegistrationActivity"></activity>
+        <activity android:name=".AddPostActivity"></activity>
+        <activity android:name=".AddCommentActivity" />
+        <activity android:name=".CommentActivity" />
+        <activity android:name=".PostActivity" />
+        <activity android:name=".TopicListActivity" />
+        <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
